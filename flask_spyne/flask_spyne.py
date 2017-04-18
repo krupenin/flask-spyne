@@ -55,6 +55,8 @@ class SpyneController(object):
                                    getattr(self.spyne_app, 'chunked', True),
                                    getattr(self.spyne_app, 'max_content_length', 2 * 1024 * 1024),
                                    getattr(self.spyne_app, 'block_length', 8 * 1024))
+        if getattr(service, '__service_full_url_path__', False):
+            wsgi_app.doc.wsdl11.build_interface_document(getattr(service, '__service_full_url_path__'))
         self.services[service.__service_url_path__] = wsgi_app
 
     def wsgi_app(self, environ, start_response):
